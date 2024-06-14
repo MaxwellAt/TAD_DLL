@@ -1,9 +1,5 @@
-//
-// Created by ko4la on 13/06/24.
-//
-
-#ifndef TAD_SLL_DLL_H
-#define TAD_SLL_DLL_H
+#ifndef DLL_H
+#define DLL_H
 #define TRUE 1
 #define FALSE 0
 
@@ -32,4 +28,4 @@ int dllDestroyNotEmpty ( DLList *l, int (*myfree)(void *));
 
 
 
-#endif //TAD_SLL_DLL_H
+#endif //DLL_H

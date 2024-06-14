@@ -1,7 +1,3 @@
-//
-// Created by ko4la on 13/06/24.
-//
-
 #include "DLL.h"
 
 #include <stdlib.h>
