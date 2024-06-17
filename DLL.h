@@ -24,7 +24,6 @@ void *dllGetNext(DLList *l);
 int dllInsertAsLast(DLList *l, void *data);
 int dllInsertAfterSpec( DLList *l, void *key, void *data, int (*cmp)(void *, void *));
 void * dllRemoveSpec( DLList *l, void *key, int (*cmp)(void *, void *));
-int dllDestroyNotEmpty ( DLList *l, int (*myfree)(void *));
 
 
 
