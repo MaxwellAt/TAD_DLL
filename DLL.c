@@ -1,7 +1,5 @@
 #include "DLL.h"
-
 #include <stdlib.h>
-
 
 DLList *dllCreate (){
     DLList *l;
@@ -52,7 +50,7 @@ void *dllQuerySpec(DLList *l, void *key, int (*cmp)(void *, void *)){
     if(l != NULL){
         DLLNode *curNode = l->first;
         while(curNode != NULL){
-            if(cmp(curNode->data, key) == 0){
+            if(cmp(curNode->data, key) == TRUE){
                 return curNode->data;
             }
             curNode = curNode->next;
@@ -129,7 +127,7 @@ int dllInsertAfterSpec( DLList *l, void *key, void *data, int (*cmp)(void *, voi
         }
         DLLNode *curNode = l->first;
         while(curNode != NULL){
-            if(cmp(curNode->data, key) == 0){
+            if(cmp(curNode->data, key) == TRUE){
                 DLLNode *newNode = (DLLNode*)malloc(sizeof(DLLNode));
                 if(newNode != NULL){
                     newNode->data = data;
@@ -156,15 +154,20 @@ void * dllRemoveSpec( DLList *l, void *key, int (*cmp)(void *, void *)){
         }
         DLLNode *curNode = l->first;
         while(curNode != NULL){
-            if(cmp(curNode->data, key) == 0){
-                if(curNode->prev != NULL){
-                    curNode->prev->next = curNode->next;
-                }else{
-                    l->first = curNode->next;
+            if(cmp(curNode->data, key) == TRUE){
+                DLLNode *prevNode = curNode->prev;
+                DLLNode *nextNode = curNode->next;
+
+                if (prevNode != NULL) {
+                    prevNode->next = nextNode;
+                } else {
+                    l->first = nextNode;
                 }
-                if(curNode->next != NULL){
-                    curNode->next->prev = curNode->prev;
+
+                if (nextNode != NULL) {
+                    nextNode->prev = prevNode;
                 }
+
                 void *data = curNode->data;
                 free(curNode);
                 return data;
@@ -175,21 +178,3 @@ void * dllRemoveSpec( DLList *l, void *key, int (*cmp)(void *, void *)){
     return NULL;
 }
 
-int dllDestroyNotEmpty ( DLList *l, int (*myfree)(void *)){
-    if(l != NULL){
-        if(l->first == NULL){
-            return -1;
-        }
-        DLLNode *curNode = l->first;
-        while(curNode != NULL){
-            DLLNode *nextNode = curNode->next;
-            myfree(curNode->data);
-            free(curNode);
-            curNode = nextNode;
-        }
-        free(l);
-        return TRUE;
-    }else{
-        return FALSE;
-    }
-}
